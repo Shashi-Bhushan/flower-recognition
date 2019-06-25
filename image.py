@@ -1,9 +1,16 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from config import config
+
 from PIL import Image
 
 image = Image.open('images/n.jpg')
 
-width = image.size[0]
-height = image.size[1]
+config_parser = config.Config('config/config.ini').get_config_dimensions()
+
+width = config_parser[0]
+height = config_parser[1]
 
 ideal_width = 200
 ideal_height = 200
@@ -16,8 +23,9 @@ image_aspect_ratio = width/float(height)
 new_width = -1
 new_height = -1
 
-def createResizeTuple() :
-	'''Get a Resize Tuple based on current aspect ratio of the image
+
+def create_resize_tuple() :
+	"""Get a Resize Tuple based on current aspect ratio of the image
 
 	The Resize tuple will be in square dimensions and the image will be cropped equally from either left and right side or top and bottom side.
 	it compares the aspect ratios - depending on whether width or height is larger, that will decide whether to chop off the sides or the top and bottom.
@@ -26,7 +34,7 @@ def createResizeTuple() :
 
 	Returns: 
 		tuple: tuple with 4 entries in form of (x1, x2, y1, y2)
-	'''
+	"""
 
 	# If width is greater than height
 	if image_aspect_ratio > ideal_aspect_ratio :
@@ -39,7 +47,7 @@ def createResizeTuple() :
 		offset = (width - new_width) / 2
 
 		# Create Resize Tuple (x1, x2, y1, y2)
-		return (offset, 0, width - offset, height)
+		return offset, 0, width - offset, height
 	else :
 		# Then crop the top and botton side edges
 
@@ -50,9 +58,10 @@ def createResizeTuple() :
 		offset = (height - new_height) / 2
 
 		# Create Resize Tuple (x1, x2, y1, y2)
-		return (0, offset, width, height - offset)
+		return 0, offset, width, height - offset
 
-resize = createResizeTuple()
+
+resize = create_resize_tuple()
 
 new_image = image.crop(resize)
 
