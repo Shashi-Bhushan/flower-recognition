@@ -7,7 +7,9 @@ import configparser
 class Config:
     config_parser = configparser.ConfigParser()
 
-    def __init__(self, config_path):
+    default_config_path = 'config/config.ini'
+
+    def __init__(self, config_path = default_config_path):
         """
         Constructor for Config
 
@@ -23,4 +25,14 @@ class Config:
 
         :return: (x1,x2) tuple for ideal dimensions
         """
-        return cls.config_parser['ideal_dimensions']['width'], cls.config_parser['ideal_dimensions']['height']
+        return int(cls.config_parser['ideal_image_dimensions']['width']), int(cls.config_parser['ideal_image_dimensions']['height'])
+
+    @classmethod
+    def get_images_directory_path(cls):
+        """
+        Return directory path where all the images are present
+
+        :return: images' directory path
+        """
+        return str(cls.config_parser['directory_path']['path'])
+

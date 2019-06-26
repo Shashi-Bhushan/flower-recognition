@@ -24,7 +24,6 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
-.idea
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -97,6 +96,10 @@ venv.bak/
 
 # Rope project settings
 .ropeproject
+
+# Intellij project settings
+.idea
+.DS_Store
 
 # mkdocs documentation
 /site
