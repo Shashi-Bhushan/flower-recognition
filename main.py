@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from config import config
-from image import util
+from config.config import Config
+from image.util import ImageUtil
+from image.util import FileUtil
 from PIL import Image
 
 import os
 
 
 def main():
-    image_util = util.ImageUtil()
-    file_util = util.FileUtil()
+    image_util = ImageUtil()
+    file_util = FileUtil()
 
-    config_parser = config.Config()
+    config_parser = Config()
 
     ideal_image_dimensions = config_parser.get_config_dimensions()
 
