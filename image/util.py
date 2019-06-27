@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from os import walk
 from os import listdir
 from os import path
 
@@ -70,13 +71,15 @@ class ImageUtil:
             # Create dictionary if path exists
             images_dict = {}
 
-            # Crawl over each flower type directory
-            for dir_name in listdir(directory_path):
-                # get images list from directory
-                images_list = [file_name for file_name in listdir("/".join([directory_path, dir_name]))]
+            _, dir_name, _ = next(walk(directory_path))
 
-                images_dict[dir_name] = images_list
-                break
+            # Crawl over each flower type directory
+            for image_dir in dir_name:
+                # get Jpg images list from directory
+                images_list = [file_name for file_name in listdir("/".join([directory_path, image_dir]))
+                               if file_name.endswith(".jpg")]
+
+                images_dict[image_dir] = images_list
 
             return images_dict
 
@@ -96,16 +99,3 @@ class ImageUtil:
         """
         return image.crop(resize_tuple).resize(ideal_image_dimensions, Image.ANTIALIAS)
 
-
-class FileUtil:
-    @staticmethod
-    def get_dir_path(*intermittent_path):
-        """
-        Append the entries of the list to create a full directory path by joining with '/' character
-
-        :param intermittent_path:
-            the entries comprising of the intermediate directories
-        :return:
-            full path of file or directory
-        """
-        return "/".join(intermittent_path)
